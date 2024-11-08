@@ -4,7 +4,7 @@ const morgan = require("morgan");
 
 const { ErrorMiddleware, NotFoundMiddleware } = require("../middleware");
 
-module.exports = function ({ SubPermissionRoutes }) {
+module.exports = function ({ UserRoutes, SubPermissionRoutes }) {
   const router = express.Router();
   const apiRouter = express.Router();
   apiRouter
@@ -13,6 +13,7 @@ module.exports = function ({ SubPermissionRoutes }) {
     .use(morgan("dev"))
     .use(express.urlencoded({ extended: true }));
   apiRouter.use("/sub-permission", SubPermissionRoutes);
+  apiRouter.use("/user", UserRoutes);
 
   router.use("/v1/api", apiRouter);
   router.use("/", (req, res) => {
