@@ -1,13 +1,13 @@
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 
-const protect = ({ Example, config }) =>
+const protect = ({ SubPermission, config }) =>
   asyncHandler(async (req, res, next) => {
     let token = req.headers["x-api-key"];
     if (token) {
       try {
         const decoded = jwt.verify(token, config.JWT_SECRET);
-        req.example = await Example.findOne({ _id: decoded.id }).select(
+        req.example = await SubPermission.findOne({ _id: decoded.id }).select(
           "-password"
         );
         next();
