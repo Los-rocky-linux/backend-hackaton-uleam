@@ -46,13 +46,11 @@ container
     //Configuración de los servicios
     SubPermissionService: asClass(SubPermissionService).singleton(),
     UserService: asClass(UserService).singleton(),
-
   })
   .register({
     //Configuración de los controladores
     SubPermissionController: asClass(SubPermissionController).singleton(),
     UserController: asClass(UserController).singleton(),
-
   })
   .register({
     //Configuración de rutas

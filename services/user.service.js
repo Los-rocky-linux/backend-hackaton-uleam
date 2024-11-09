@@ -5,8 +5,8 @@ const AppError = require("../utils/app-error");
 let _user = null;
 
 module.exports = class UserService extends BaseService {
-    constructor({ User }) {
-        super(User);
-        _user = User;
-    }
+  constructor({ User }) {
+    super(User);
+    _user = User;
+  }
 };

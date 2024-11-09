@@ -1,4 +1,4 @@
 module.exports = {
-    SubPermissionController: require("./subPermission.controller"),
-    UserController: require("./user.controller")
+  SubPermissionController: require("./subPermission.controller"),
+  UserController: require("./user.controller"),
 };
