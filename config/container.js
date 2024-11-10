@@ -8,19 +8,31 @@ const config = require(".");
 const Routes = require("../routes");
 
 //Services
-const { SubPermissionService } = require("../services");
+const { 
+  SubPermissionService,
+  EnrollmentService,
+
+} = require("../services");
 //Controllers
-const { SubPermissionController } = require("../controllers");
+const { 
+  SubPermissionController,
+  EnrollmentController,
+ } = require("../controllers");
 
 //Startup
 const { Database, Server } = require("../startup");
 
 //Routes
 
-const { SubPermissionRoutes } = require("../routes/api/index");
+const { 
+  SubPermissionRoutes,
+  EnrollmentRoutes,
+ } = require("../routes/api/index");
 
 //Models
-const { SubPermission } = require("../models");
+const {
+   SubPermission,
+   Enrollment } = require("../models");
 
 //Funtions
 const {} = require("../functions");
@@ -40,17 +52,22 @@ container
   .register({
     //Configuración de los servicios
     SubPermissionService: asClass(SubPermissionService).singleton(),
+    EnrollmentService: asClass(EnrollmentService).singleton(),
   })
   .register({
     //Configuración de los controladores
     SubPermissionController: asClass(SubPermissionController).singleton(),
+    EnrollmentController: asClass(EnrollmentController).singleton(),
   })
   .register({
     //Configuración de rutas
-    SubPermissionRoutes: asFunction(SubPermissionRoutes).singleton(),})
+    SubPermissionRoutes: asFunction(SubPermissionRoutes).singleton(),
+    EnrollmentRoutes: asFunction(EnrollmentRoutes).singleton()
+  })
   .register({
     //Configuración de modelos
     SubPermission: asValue(SubPermission),
+    Enrollment: asValue(Enrollment)
   })
   .register({
     //middlewares
