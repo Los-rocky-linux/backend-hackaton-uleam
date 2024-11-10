@@ -4,49 +4,19 @@ const { Schema } = mongoose;
 const enrollmentSchema = new Schema(
   {
     studentInfo: {
-      name: {
-        type: String,
-        required: true,
-      },
-      email: {
-        type: String,
-        required: true,
-      },
-      // Agrega otros campos aquí si necesitas más información sobre el estudiante
+      name: { type: String, required: true },
+      email: { type: String, required: true }
     },
-    modality: {
-      type: String,
-      required: true,
-      enum: ["Trabajo de Integración Curricular", "Examen de Carácter Complexivo"]
-    },
-    topicTitle: {
-      type: String,
-      required: function() { return this.modality === "Trabajo de Integración Curricular"; },
-    },
-    problemDescription: {
-      type: String,
-      required: function() { return this.modality === "Trabajo de Integración Curricular"; },
-    },
+    modality: { type: Schema.Types.ObjectId, ref: "Modality", required: true },
+    topicTitle: { type: String },
+    problemDescription: { type: String },
     developmentMechanism: {
-      type: {
-        type: String,
-        enum: ["Individual", "Grupal"],
-        required: true,
-      },
-      members: [{
-        type: String,
-        required: function() { return this.developmentMechanism.type === "Grupal"; }
-      }]
+      type: { type: Schema.Types.ObjectId, ref: "DevelopmentType", required: true },
+      members: [{ type: Schema.Types.ObjectId, ref: "User" }]
     },
-    preferredTutors: [{
-      type: String,
-      required: false,
-    }],
+    preferredTutors: [{ type: Schema.Types.ObjectId, ref: "User" }]
   },
-  {
-    timestamps: true,
-    versionKey: false,
-  }
+  { timestamps: true, versionKey: false }
 );
 
 module.exports = mongoose.model("Enrollment", enrollmentSchema);

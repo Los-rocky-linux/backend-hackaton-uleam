@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const rolSchema = new Schema(
+const ModalitySchema = new Schema(
   {
-    rolName: {
+    name: {
       type: String,
       required: true,
     },
-    rolDescription: {
+    description: {
       type: String,
       required: true,
     },
@@ -18,4 +18,4 @@ const rolSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("Rol", rolSchema);
+module.exports = mongoose.model("Modality", ModalitySchema);

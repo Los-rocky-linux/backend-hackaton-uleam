@@ -9,14 +9,25 @@ const Routes = require("../routes");
 
 //Services
 const { 
-  SubPermissionService,
   EnrollmentService,
-
+  UserService,
+  RolService,
+  RolePermissionService,
+  PermissionService,
+  SubPermissionService,
+  ModalityService,
+  DevelopmentTypeService
 } = require("../services");
 //Controllers
 const { 
-  SubPermissionController,
   EnrollmentController,
+  UserController,
+  RolController,
+  RolePermissionController,
+  PermissionController,
+  SubPermissionController,
+  ModalityController,
+  DevelopmentTypeController
  } = require("../controllers");
 
 //Startup
@@ -25,14 +36,27 @@ const { Database, Server } = require("../startup");
 //Routes
 
 const { 
-  SubPermissionRoutes,
   EnrollmentRoutes,
+  UserRoutes,
+  RolRoutes,
+  RolePermissionRoutes,
+  PermissionRoutes,
+  SubPermissionRoutes,
+  ModalityRoutes,
+  DevelopmentTypeRoutes
  } = require("../routes/api/index");
 
 //Models
 const {
+   Enrollment,
+   User,
+   Rol,
+   RolePermission,
+   Permission,
    SubPermission,
-   Enrollment } = require("../models");
+   Modality,
+   DevelopmentType
+  } = require("../models");
 
 //Funtions
 const {} = require("../functions");
@@ -51,23 +75,47 @@ container
   })
   .register({
     //Configuración de los servicios
-    SubPermissionService: asClass(SubPermissionService).singleton(),
     EnrollmentService: asClass(EnrollmentService).singleton(),
+    UserService: asClass(UserService).singleton(),
+    RolService: asClass(RolService).singleton(),
+    RolePermissionService: asClass(RolePermissionService).singleton(),
+    PermissionService: asClass(PermissionService).singleton(),
+    SubPermissionService: asClass(SubPermissionService).singleton(),
+    ModalityService: asClass(ModalityService).singleton(),
+    DevelopmentTypeService: asClass(DevelopmentTypeService).singleton(),
   })
   .register({
     //Configuración de los controladores
-    SubPermissionController: asClass(SubPermissionController).singleton(),
     EnrollmentController: asClass(EnrollmentController).singleton(),
+    UserController: asClass(UserController).singleton(),
+    RolController: asClass(RolController).singleton(),
+    RolePermissionController: asClass(RolePermissionController).singleton(),
+    PermissionController: asClass(PermissionController).singleton(),
+    SubPermissionController: asClass(SubPermissionController).singleton(),
+    ModalityController: asClass(ModalityController).singleton(),
+    DevelopmentTypeController: asClass(DevelopmentTypeController).singleton(),
   })
   .register({
     //Configuración de rutas
+    EnrollmentRoutes: asFunction(EnrollmentRoutes).singleton(),
+    UserRoutes: asFunction(UserRoutes).singleton(),
+    RolRoutes: asFunction(RolRoutes).singleton(),
+    RolePermissionRoutes: asFunction(RolePermissionRoutes).singleton(),
+    PermissionRoutes: asFunction(PermissionRoutes).singleton(),
     SubPermissionRoutes: asFunction(SubPermissionRoutes).singleton(),
-    EnrollmentRoutes: asFunction(EnrollmentRoutes).singleton()
+    ModalityRoutes: asFunction(ModalityRoutes).singleton(),
+    DevelopmentTypeRoutes: asFunction(DevelopmentTypeRoutes).singleton(),
   })
   .register({
     //Configuración de modelos
+    Enrollment: asValue(Enrollment),
+    User: asValue(User),
+    Rol: asValue(Rol),
+    RolePermission: asValue(RolePermission),
+    Permission: asValue(Permission),
     SubPermission: asValue(SubPermission),
-    Enrollment: asValue(Enrollment)
+    Modality: asValue(Modality),
+    DevelopmentType: asValue(DevelopmentType),
   })
   .register({
     //middlewares
