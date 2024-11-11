@@ -7,5 +7,6 @@ module.exports = {
     PermissionController: require("./permission.controller"),
     ModalityController: require("./modality.controller"),
     DevelopmentTypeController: require("./developmentType.controller"),
+    GroupController: require("./group.controller"),
 
 };

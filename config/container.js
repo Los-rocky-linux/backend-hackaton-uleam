@@ -16,7 +16,8 @@ const {
   PermissionService,
   SubPermissionService,
   ModalityService,
-  DevelopmentTypeService
+  DevelopmentTypeService,
+  GroupService
 } = require("../services");
 //Controllers
 const { 
@@ -27,7 +28,8 @@ const {
   PermissionController,
   SubPermissionController,
   ModalityController,
-  DevelopmentTypeController
+  DevelopmentTypeController,
+  GroupController
  } = require("../controllers");
 
 //Startup
@@ -43,7 +45,8 @@ const {
   PermissionRoutes,
   SubPermissionRoutes,
   ModalityRoutes,
-  DevelopmentTypeRoutes
+  DevelopmentTypeRoutes,
+  GroupRoutes
  } = require("../routes/api/index");
 
 //Models
@@ -55,7 +58,8 @@ const {
    Permission,
    SubPermission,
    Modality,
-   DevelopmentType
+   DevelopmentType,
+   Group
   } = require("../models");
 
 //Funtions
@@ -83,6 +87,7 @@ container
     SubPermissionService: asClass(SubPermissionService).singleton(),
     ModalityService: asClass(ModalityService).singleton(),
     DevelopmentTypeService: asClass(DevelopmentTypeService).singleton(),
+    GroupService: asClass(GroupService).singleton(),
   })
   .register({
     //Configuración de los controladores
@@ -94,6 +99,7 @@ container
     SubPermissionController: asClass(SubPermissionController).singleton(),
     ModalityController: asClass(ModalityController).singleton(),
     DevelopmentTypeController: asClass(DevelopmentTypeController).singleton(),
+    GroupController: asClass(GroupController).singleton(),
   })
   .register({
     //Configuración de rutas
@@ -105,6 +111,7 @@ container
     SubPermissionRoutes: asFunction(SubPermissionRoutes).singleton(),
     ModalityRoutes: asFunction(ModalityRoutes).singleton(),
     DevelopmentTypeRoutes: asFunction(DevelopmentTypeRoutes).singleton(),
+    GroupRoutes: asFunction(GroupRoutes).singleton(),
   })
   .register({
     //Configuración de modelos
@@ -116,6 +123,7 @@ container
     SubPermission: asValue(SubPermission),
     Modality: asValue(Modality),
     DevelopmentType: asValue(DevelopmentType),
+    Group: asValue(Group),
   })
   .register({
     //middlewares

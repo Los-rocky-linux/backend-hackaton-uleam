@@ -12,7 +12,8 @@ module.exports = function ({
   RolePermissionRoutes,
   PermissionRoutes,
   ModalityRoutes,
-  DevelopmentTypeRoutes
+  DevelopmentTypeRoutes,
+  GroupRoutes
 
 }) {
   const router = express.Router();
@@ -31,6 +32,7 @@ module.exports = function ({
   apiRouter.use("/permission", PermissionRoutes);
   apiRouter.use("/modality", ModalityRoutes);
   apiRouter.use("/development-type", DevelopmentTypeRoutes);
+  apiRouter.use("/group", GroupRoutes);
 
 
   router.use("/v1/api", apiRouter);

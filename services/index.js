@@ -7,5 +7,6 @@ module.exports = {
     PermissionService: require("./permission.service"),
     ModalityService: require("./modality.service"),
     DevelopmentTypeService: require("./developmentType.service"),
+    GroupService: require("./group.service"),
 
 };

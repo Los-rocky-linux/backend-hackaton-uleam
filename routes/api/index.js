@@ -7,4 +7,5 @@ module.exports = {
     PermissionRoutes: require("./v1.permission"),
     ModalityRoutes: require("./v1.modality"),
     DevelopmentTypeRoutes: require("./v1.developmentType"),
+    GroupRoutes: require("./v1.group"),
 };

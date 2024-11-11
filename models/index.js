@@ -7,5 +7,6 @@ module.exports = {
   Permission: require("./permission.model"),
   Modality: require("./modality.model"),
   DevelopmentType: require("./developmentType.model"),
+  Group: require("./group.model"),
 
 };
