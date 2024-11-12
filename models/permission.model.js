@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const permissionSchema = new Schema({
@@ -7,4 +7,4 @@ const permissionSchema = new Schema({
   status: { type: Boolean, default: true },
 });
 
-module.exports = mongoose.model("Permission", permissionSchema);
+module.exports = mongoose.model('Permission', permissionSchema);

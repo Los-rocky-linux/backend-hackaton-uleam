@@ -1,10 +1,12 @@
 const BaseService = require("./base.service");
 const catchServiceAsync = require("../utils/catch-service-async");
-const Group = require("../models/group.model"); // Importamos el modelo de Group
+const Group = require("../models/group.model");
 
 module.exports = class EnrollmentService extends BaseService {
-  constructor({ Enrollment, User }) {
+  constructor({ Enrollment, User, Group }) {
     super(Enrollment);
+    this.enrollmentModel = Enrollment;
+    this.groupModel = Group;
     this.userModel = User;
   }
 
@@ -25,10 +27,16 @@ module.exports = class EnrollmentService extends BaseService {
     return { result, totalCount };
   });
 
-  createEnrollment = catchServiceAsync(async (data) => {
-    const { modality, topicTitle, problemDescription, developmentMechanism, partner, preferredTutors } = data;
-    
-    const enrollment = await this.model.create({
+  createEnrollment = catchServiceAsync(async (enrollmentData) => {
+    const { userId, modality, topicTitle, problemDescription, developmentMechanism, partner, preferredTutors } = enrollmentData;
+
+    // Validar que el userId y el partner existan cuando se intenta crear un grupo
+    if (!userId || !partner) {
+      throw new Error("El usuario o el compañero no están definidos.");
+    }
+
+    // Crear el enrollment
+    const enrollment = await this.enrollmentModel.create({
       modality,
       topicTitle,
       problemDescription,
@@ -36,24 +44,25 @@ module.exports = class EnrollmentService extends BaseService {
       partner,
       preferredTutors
     });
-    
-    if (partner) {
-      const createdBy = enrollment._id;
-      
-      const group = await Group.create({
-        members: [enrollment._id, partner],
-        createdBy,
+
+    // Buscar si ya existe un grupo que incluya a ambos miembros
+    const existingGroup = await this.groupModel.findOne({
+      members: { $all: [userId, partner] }
+    });
+
+    // Si no existe el grupo, crearlo
+    if (!existingGroup) {
+      await this.groupModel.create({
+        members: [userId, partner],
+        createdBy: userId,
         topicTitle,
         problemDescription,
         modality,
         developmentType: developmentMechanism.type,
         preferredTutors
       });
-      
-      await this.model.findByIdAndUpdate(enrollment._id, { group: group._id });
-      await this.model.findByIdAndUpdate(partner, { group: group._id });
     }
-    
+
     return enrollment;
   });
 };
