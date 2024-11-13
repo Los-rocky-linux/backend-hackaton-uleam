@@ -1,25 +1,33 @@
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 
-const protect = ({ Example, config }) =>
+const protect = ({ UserModel, config }) =>
   asyncHandler(async (req, res, next) => {
     let token = req.headers["x-api-key"];
+
     if (token) {
       try {
         const decoded = jwt.verify(token, config.JWT_SECRET);
-        req.example = await Example.findOne({ _id: decoded.id }).select(
+
+        req.user = await UserModel.findOne({ _id: decoded.id }).select(
           "-password"
         );
+
+        if (!req.user) {
+          res.status(401);
+          throw new Error("No autorizado, usuario no encontrado");
+        }
+
         next();
       } catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(401);
-        throw new Error("No autorizado");
+        throw new Error("No autorizado, token no válido");
       }
-    }
-    if (!token) {
+    } else {
       res.status(401);
       throw new Error("No autorizado, no se envió el token");
     }
   });
+
 module.exports = { protect };
