@@ -8,24 +8,59 @@ const config = require(".");
 const Routes = require("../routes");
 
 //Services
-const { SubPermissionService } = require("../services");
-const { UserService } = require("../services");
-
+const { 
+  EnrollmentService,
+  UserService,
+  RolService,
+  RolePermissionService,
+  PermissionService,
+  SubPermissionService,
+  ModalityService,
+  DevelopmentTypeService,
+  GroupService
+} = require("../services");
 //Controllers
-const { SubPermissionController } = require("../controllers");
-const { UserController } = require("../controllers");
+const { 
+  EnrollmentController,
+  UserController,
+  RolController,
+  RolePermissionController,
+  PermissionController,
+  SubPermissionController,
+  ModalityController,
+  DevelopmentTypeController,
+  GroupController
+ } = require("../controllers");
 
 //Startup
 const { Database, Server } = require("../startup");
 
 //Routes
 
-const { SubPermissionRoutes } = require("../routes/api/index");
-const { UserRoutes } = require("../routes/api/index");
+const { 
+  EnrollmentRoutes,
+  UserRoutes,
+  RolRoutes,
+  RolePermissionRoutes,
+  PermissionRoutes,
+  SubPermissionRoutes,
+  ModalityRoutes,
+  DevelopmentTypeRoutes,
+  GroupRoutes
+ } = require("../routes/api/index");
 
 //Models
-const { SubPermission } = require("../models");
-const { User } = require("../models");
+const {
+   Enrollment,
+   User,
+   Rol,
+   RolePermission,
+   Permission,
+   SubPermission,
+   Modality,
+   DevelopmentType,
+   Group
+  } = require("../models");
 
 //Funtions
 const {} = require("../functions");
@@ -44,23 +79,51 @@ container
   })
   .register({
     //Configuración de los servicios
-    SubPermissionService: asClass(SubPermissionService).singleton(),
+    EnrollmentService: asClass(EnrollmentService).singleton(),
     UserService: asClass(UserService).singleton(),
+    RolService: asClass(RolService).singleton(),
+    RolePermissionService: asClass(RolePermissionService).singleton(),
+    PermissionService: asClass(PermissionService).singleton(),
+    SubPermissionService: asClass(SubPermissionService).singleton(),
+    ModalityService: asClass(ModalityService).singleton(),
+    DevelopmentTypeService: asClass(DevelopmentTypeService).singleton(),
+    GroupService: asClass(GroupService).singleton(),
   })
   .register({
     //Configuración de los controladores
-    SubPermissionController: asClass(SubPermissionController).singleton(),
+    EnrollmentController: asClass(EnrollmentController).singleton(),
     UserController: asClass(UserController).singleton(),
+    RolController: asClass(RolController).singleton(),
+    RolePermissionController: asClass(RolePermissionController).singleton(),
+    PermissionController: asClass(PermissionController).singleton(),
+    SubPermissionController: asClass(SubPermissionController).singleton(),
+    ModalityController: asClass(ModalityController).singleton(),
+    DevelopmentTypeController: asClass(DevelopmentTypeController).singleton(),
+    GroupController: asClass(GroupController).singleton(),
   })
   .register({
     //Configuración de rutas
-    SubPermissionRoutes: asFunction(SubPermissionRoutes).singleton(),
+    EnrollmentRoutes: asFunction(EnrollmentRoutes).singleton(),
     UserRoutes: asFunction(UserRoutes).singleton(),
+    RolRoutes: asFunction(RolRoutes).singleton(),
+    RolePermissionRoutes: asFunction(RolePermissionRoutes).singleton(),
+    PermissionRoutes: asFunction(PermissionRoutes).singleton(),
+    SubPermissionRoutes: asFunction(SubPermissionRoutes).singleton(),
+    ModalityRoutes: asFunction(ModalityRoutes).singleton(),
+    DevelopmentTypeRoutes: asFunction(DevelopmentTypeRoutes).singleton(),
+    GroupRoutes: asFunction(GroupRoutes).singleton(),
   })
   .register({
     //Configuración de modelos
-    SubPermission: asValue(SubPermission),
+    Enrollment: asValue(Enrollment),
     User: asValue(User),
+    Rol: asValue(Rol),
+    RolePermission: asValue(RolePermission),
+    Permission: asValue(Permission),
+    SubPermission: asValue(SubPermission),
+    Modality: asValue(Modality),
+    DevelopmentType: asValue(DevelopmentType),
+    Group: asValue(Group),
   })
   .register({
     //middlewares

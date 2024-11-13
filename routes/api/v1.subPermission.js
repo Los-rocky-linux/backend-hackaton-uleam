@@ -1,10 +1,7 @@
 const { Router } = require("express");
 
-module.exports = function ({ SubPermissionController, AuthMiddleware }) {
+module.exports = function ({ SubPermissionController }) {
   const router = Router();
-
-  //testing de bloqueo prueba
-  router.use(AuthMiddleware);
 
   router.get("/get-all", SubPermissionController.getAll);
   router.get("/get/:id", SubPermissionController.getOne);

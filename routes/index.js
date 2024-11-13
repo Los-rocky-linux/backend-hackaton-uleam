@@ -4,7 +4,18 @@ const morgan = require("morgan");
 
 const { ErrorMiddleware, NotFoundMiddleware } = require("../middleware");
 
-module.exports = function ({ UserRoutes, SubPermissionRoutes }) {
+module.exports = function ({ 
+  SubPermissionRoutes,
+  EnrollmentRoutes,
+  UserRoutes,
+  RolRoutes,
+  RolePermissionRoutes,
+  PermissionRoutes,
+  ModalityRoutes,
+  DevelopmentTypeRoutes,
+  GroupRoutes
+
+}) {
   const router = express.Router();
   const apiRouter = express.Router();
   apiRouter
@@ -12,8 +23,17 @@ module.exports = function ({ UserRoutes, SubPermissionRoutes }) {
     .use(cors())
     .use(morgan("dev"))
     .use(express.urlencoded({ extended: true }));
+    //apiRoutes aqui
   apiRouter.use("/sub-permission", SubPermissionRoutes);
+  apiRouter.use("/enrollment", EnrollmentRoutes);
   apiRouter.use("/user", UserRoutes);
+  apiRouter.use("/rol", RolRoutes);
+  apiRouter.use("/role-permission", RolePermissionRoutes);
+  apiRouter.use("/permission", PermissionRoutes);
+  apiRouter.use("/modality", ModalityRoutes);
+  apiRouter.use("/development-type", DevelopmentTypeRoutes);
+  apiRouter.use("/group", GroupRoutes);
+
 
   router.use("/v1/api", apiRouter);
   router.use("/", (req, res) => {
