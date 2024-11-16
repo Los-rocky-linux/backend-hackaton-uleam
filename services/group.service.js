@@ -14,15 +14,21 @@ module.exports = class GroupService extends BaseService {
 
     const result = await this.model
       .find()
+      .populate({
+        path: 'enrollments',
+        populate: [
+          { path: 'createdBy', select: 'name lastName email' },
+          { path: 'modality', select: 'name' },
+          { path: 'developmentMechanism', select: 'name' },
+          { path: 'preferredTutors', select: 'name' }
+        ]
+      })
       .populate('members', 'name lastName email')
-      .populate('modality', 'name')
-      .populate('developmentType', 'name')
-      .populate('preferredTutors', 'name')
       .lean()
       .skip(pagination)
       .limit(limit)
       .sort({ createdAt: -1 });
-      console.log(result);
+
     return { result, totalCount };
   });
 };
