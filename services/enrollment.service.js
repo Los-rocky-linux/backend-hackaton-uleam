@@ -1,6 +1,5 @@
-// enrollment.service.js
-const BaseService = require("./base.service");
-const catchServiceAsync = require("../utils/catch-service-async");
+const BaseService = require('./base.service');
+const catchServiceAsync = require('../utils/catch-service-async');
 
 module.exports = class EnrollmentService extends BaseService {
   constructor({ Enrollment, User, Group }) {
@@ -30,9 +29,21 @@ module.exports = class EnrollmentService extends BaseService {
   });
 
   createEnrollment = catchServiceAsync(async (enrollmentData) => {
-    const { userId, modality, topicTitle, problemDescription, developmentMechanism, partner, preferredTutors } = enrollmentData;
-    if (!userId || !partner) {
-      throw new Error("El usuario o el compañero no están definidos.");
+    const {
+      userId,
+      modality,
+      topicTitle,
+      problemDescription,
+      developmentMechanism,
+      partner,
+      preferredTutors,
+    } = enrollmentData;
+
+    // Validación de campos requeridos
+    if (!userId || !modality || !developmentMechanism || !partner) {
+      throw new Error(
+        'Campos requeridos faltantes: usuario, modalidad, tipo de desarrollo o compañero.'
+      );
     }
 
     // Crear la inscripción
@@ -43,24 +54,24 @@ module.exports = class EnrollmentService extends BaseService {
       problemDescription,
       developmentMechanism,
       partner,
-      preferredTutors
+      preferredTutors,
     });
 
-    // Buscar inscripción existente con el usuario actual como compañero
+    // Verificar si el compañero ya creó una inscripción seleccionando al usuario actual como compañero
     const partnerEnrollment = await this.enrollmentModel.findOne({
       createdBy: partner,
-      partner: userId
+      partner: userId,
     });
 
     if (partnerEnrollment && !enrollment.group && !partnerEnrollment.group) {
-      // Crear un grupo con ambas inscripciones y usuarios
+      // Crear un grupo
       const group = await this.groupModel.create({
         enrollments: [enrollment._id, partnerEnrollment._id],
         members: [userId, partner],
-        createdBy: userId
+        createdBy: userId,
       });
 
-      // Asociar el grupo a ambas inscripciones
+      // Actualizar las inscripciones con la referencia al grupo
       enrollment.group = group._id;
       partnerEnrollment.group = group._id;
       await enrollment.save();
