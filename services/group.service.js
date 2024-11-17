@@ -1,5 +1,5 @@
-const BaseService = require("./base.service");
-const catchServiceAsync = require("../utils/catch-service-async");
+const BaseService = require('./base.service');
+const catchServiceAsync = require('../utils/catch-service-async');
 
 module.exports = class GroupService extends BaseService {
   constructor({ Group, User, Rol }) {
@@ -20,8 +20,9 @@ module.exports = class GroupService extends BaseService {
           { path: 'createdBy', select: 'name lastName email' },
           { path: 'modality', select: 'name' },
           { path: 'developmentMechanism', select: 'name' },
-          { path: 'preferredTutors', select: 'name' }
-        ]
+          { path: 'preferredTutors', select: 'name' },
+          { path: 'partner', select: 'name lastName' },
+        ],
       })
       .populate('members', 'name lastName email')
       .lean()
