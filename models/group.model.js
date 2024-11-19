@@ -5,6 +5,7 @@ const groupSchema = new Schema({
   enrollments: [{ type: Schema.Types.ObjectId, ref: "Enrollment", required: true }],
   members: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
   createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  isIndividual: { type: Boolean, default: false },
   // Campos específicos del grupo si los hay
 }, { timestamps: true, versionKey: false });
 

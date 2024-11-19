@@ -39,12 +39,7 @@ module.exports = class EnrollmentService extends BaseService {
       preferredTutors,
     } = enrollmentData;
 
-    // Validación de campos requeridos
-    if (!userId || !modality || !developmentMechanism || !partner) {
-      throw new Error(
-        'Campos requeridos faltantes: usuario, modalidad, tipo de desarrollo o compañero.'
-      );
-    }
+  
 
     // Crear la inscripción
     const enrollment = await this.enrollmentModel.create({
