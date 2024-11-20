@@ -24,4 +24,23 @@ module.exports = class UserService extends BaseService {
 
     return { result, totalCount };
   }
+
+  async getStudents(limit = 10, pageNum = 1) {
+    const pagination = limit * (pageNum - 1);
+    const studentRole = await this.rolModel.findOne({ roleName: "Estudiante" });
+
+    if (!studentRole) {
+      throw new Error("Student role not found");
+    }
+
+    const totalCount = await this.model.countDocuments({ rol: studentRole._id, status: true });
+    const result = await this.model
+      .find({ rol: studentRole._id, status: true })
+      .lean()
+      .skip(pagination)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+
+    return { result, totalCount };
+  }
 };

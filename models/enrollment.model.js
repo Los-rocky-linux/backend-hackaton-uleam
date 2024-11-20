@@ -1,18 +1,22 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const enrollmentSchema = new Schema(
   {
-    modality: { type: Schema.Types.ObjectId, ref: "Modality", required: true },
+    createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    modality: { type: Schema.Types.ObjectId, ref: 'Modality', required: true },
     topicTitle: { type: String },
     problemDescription: { type: String },
     developmentMechanism: {
-      type: { type: Schema.Types.ObjectId, ref: "DevelopmentType", required: true }
+      type: Schema.Types.ObjectId,
+      ref: 'DevelopmentType',
+      required: true,
     },
-    partner: { type: Schema.Types.ObjectId, ref: "User" },
-    preferredTutors: [{ type: Schema.Types.ObjectId, ref: "User" }]
+    partner: { type: Schema.Types.ObjectId, ref: 'User' },
+    preferredTutors: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    group: { type: Schema.Types.ObjectId, ref: 'Group' }, // Referencia al grupo
   },
   { timestamps: true, versionKey: false }
 );
 
-module.exports = mongoose.model("Enrollment", enrollmentSchema);
+module.exports = mongoose.model('Enrollment', enrollmentSchema);
