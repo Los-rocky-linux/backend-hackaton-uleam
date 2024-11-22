@@ -13,7 +13,9 @@ module.exports = function ({
   PermissionRoutes,
   ModalityRoutes,
   DevelopmentTypeRoutes,
-  GroupRoutes
+  GroupRoutes,
+  InductionPeriodRoutes,
+  WorkshopRegistrationRoutes,
 
 }) {
   const router = express.Router();
@@ -33,6 +35,8 @@ module.exports = function ({
   apiRouter.use("/modality", ModalityRoutes);
   apiRouter.use("/development-type", DevelopmentTypeRoutes);
   apiRouter.use("/group", GroupRoutes);
+  apiRouter.use("/induction-period", InductionPeriodRoutes);
+  apiRouter.use("/workshop-registration", WorkshopRegistrationRoutes);
 
 
   router.use("/v1/api", apiRouter);

@@ -8,5 +8,7 @@ module.exports = {
     ModalityService: require("./modality.service"),
     DevelopmentTypeService: require("./developmentType.service"),
     GroupService: require("./group.service"),
+    InductionPeriodService: require("./inductionPeriod.service"),
+    WorkshopRegistrationService: require("./workshopRegistration.service"),
 
 };

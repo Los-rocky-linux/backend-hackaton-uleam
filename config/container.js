@@ -17,7 +17,9 @@ const {
   SubPermissionService,
   ModalityService,
   DevelopmentTypeService,
-  GroupService
+  GroupService,
+  InductionPeriodService,
+  WorkshopRegistrationService,
 } = require("../services");
 //Controllers
 const { 
@@ -29,7 +31,9 @@ const {
   SubPermissionController,
   ModalityController,
   DevelopmentTypeController,
-  GroupController
+  GroupController,
+  InductionPeriodController,
+  WorkshopRegistrationController,
  } = require("../controllers");
 
 //Startup
@@ -46,7 +50,9 @@ const {
   SubPermissionRoutes,
   ModalityRoutes,
   DevelopmentTypeRoutes,
-  GroupRoutes
+  GroupRoutes,
+  InductionPeriodRoutes,
+  WorkshopRegistrationRoutes,
  } = require("../routes/api/index");
 
 //Models
@@ -59,7 +65,9 @@ const {
    SubPermission,
    Modality,
    DevelopmentType,
-   Group
+   Group,
+   InductionPeriod,
+   WorkshopRegistration,
   } = require("../models");
 
 //Funtions
@@ -88,6 +96,8 @@ container
     ModalityService: asClass(ModalityService).singleton(),
     DevelopmentTypeService: asClass(DevelopmentTypeService).singleton(),
     GroupService: asClass(GroupService).singleton(),
+    InductionPeriodService: asClass(InductionPeriodService).singleton(),
+    WorkshopRegistrationService: asClass(WorkshopRegistrationService).singleton(),
   })
   .register({
     //Configuración de los controladores
@@ -100,6 +110,8 @@ container
     ModalityController: asClass(ModalityController).singleton(),
     DevelopmentTypeController: asClass(DevelopmentTypeController).singleton(),
     GroupController: asClass(GroupController).singleton(),
+    InductionPeriodController: asClass(InductionPeriodController).singleton(),
+    WorkshopRegistrationController: asClass(WorkshopRegistrationController).singleton(),
   })
   .register({
     //Configuración de rutas
@@ -112,6 +124,8 @@ container
     ModalityRoutes: asFunction(ModalityRoutes).singleton(),
     DevelopmentTypeRoutes: asFunction(DevelopmentTypeRoutes).singleton(),
     GroupRoutes: asFunction(GroupRoutes).singleton(),
+    InductionPeriodRoutes: asFunction(InductionPeriodRoutes).singleton(),
+    WorkshopRegistrationRoutes: asFunction(WorkshopRegistrationRoutes).singleton(),
   })
   .register({
     //Configuración de modelos
@@ -124,6 +138,8 @@ container
     Modality: asValue(Modality),
     DevelopmentType: asValue(DevelopmentType),
     Group: asValue(Group),
+    InductionPeriod: asValue(InductionPeriod),
+    WorkshopRegistration: asValue(WorkshopRegistration),
   })
   .register({
     //middlewares

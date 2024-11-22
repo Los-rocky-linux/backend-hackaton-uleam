@@ -8,5 +8,7 @@ module.exports = {
   Modality: require("./modality.model"),
   DevelopmentType: require("./developmentType.model"),
   Group: require("./group.model"),
+  InductionPeriod: require("./inductionPeriod.model"),
+  WorkshopRegistration: require("./workshopRegistration.model"),
 
 };

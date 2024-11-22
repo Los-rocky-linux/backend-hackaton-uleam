@@ -8,5 +8,7 @@ module.exports = {
     ModalityController: require("./modality.controller"),
     DevelopmentTypeController: require("./developmentType.controller"),
     GroupController: require("./group.controller"),
+    InductionPeriodController: require("./inductionPeriod.controller"),
+    WorkshopRegistrationController: require("./workshopRegistration.controller"),
 
 };
