@@ -1,4 +1,6 @@
 module.exports = {
+    ManagementTopicController: require("./managementTopic.controller"),
+    ManagementTutorController: require("./managementTutor.controller"),
     SubPermissionController: require("./subPermission.controller"),
     EnrollmentController: require("./enrollment.controller"),
     UserController: require("./user.controller"),
@@ -10,5 +12,4 @@ module.exports = {
     GroupController: require("./group.controller"),
     InductionPeriodController: require("./inductionPeriod.controller"),
     WorkshopRegistrationController: require("./workshopRegistration.controller"),
-
 };

@@ -1,4 +1,6 @@
 module.exports = {
+  ManagementTutor: require("./managementTutor.model"),
+  ManagementTopic: require("./managementTopic.model"),
   SubPermission: require("./subPermission.model"),
   Enrollment: require("./enrollment.model"),
   User: require("./user.model"),

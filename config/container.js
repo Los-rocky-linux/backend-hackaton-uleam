@@ -8,7 +8,9 @@ const config = require(".");
 const Routes = require("../routes");
 
 //Services
-const { 
+const {
+  ManagementTopicService,
+  ManagementTutorService,
   EnrollmentService,
   UserService,
   RolService,
@@ -22,7 +24,9 @@ const {
   WorkshopRegistrationService,
 } = require("../services");
 //Controllers
-const { 
+const {
+  ManagementTopicController,
+  ManagementTutorController,
   EnrollmentController,
   UserController,
   RolController,
@@ -34,14 +38,16 @@ const {
   GroupController,
   InductionPeriodController,
   WorkshopRegistrationController,
- } = require("../controllers");
+} = require("../controllers");
 
 //Startup
 const { Database, Server } = require("../startup");
 
 //Routes
 
-const { 
+const {
+  ManagementTopicRoutes,
+  ManagementTutorRoutes,
   EnrollmentRoutes,
   UserRoutes,
   RolRoutes,
@@ -53,22 +59,24 @@ const {
   GroupRoutes,
   InductionPeriodRoutes,
   WorkshopRegistrationRoutes,
- } = require("../routes/api/index");
+} = require("../routes/api/index");
 
 //Models
 const {
-   Enrollment,
-   User,
-   Rol,
-   RolePermission,
-   Permission,
-   SubPermission,
-   Modality,
-   DevelopmentType,
-   Group,
-   InductionPeriod,
-   WorkshopRegistration,
-  } = require("../models");
+  ManagementTopic,
+  ManagementTutor,
+  Enrollment,
+  User,
+  Rol,
+  RolePermission,
+  Permission,
+  SubPermission,
+  Modality,
+  DevelopmentType,
+  Group,
+  InductionPeriod,
+  WorkshopRegistration,
+} = require("../models");
 
 //Funtions
 const {} = require("../functions");
@@ -87,6 +95,8 @@ container
   })
   .register({
     //Configuración de los servicios
+    ManagementTopicService: asClass(ManagementTopicService).singleton(),
+    ManagementTutorService: asClass(ManagementTutorService).singleton(),
     EnrollmentService: asClass(EnrollmentService).singleton(),
     UserService: asClass(UserService).singleton(),
     RolService: asClass(RolService).singleton(),
@@ -97,10 +107,14 @@ container
     DevelopmentTypeService: asClass(DevelopmentTypeService).singleton(),
     GroupService: asClass(GroupService).singleton(),
     InductionPeriodService: asClass(InductionPeriodService).singleton(),
-    WorkshopRegistrationService: asClass(WorkshopRegistrationService).singleton(),
+    WorkshopRegistrationService: asClass(
+      WorkshopRegistrationService
+    ).singleton(),
   })
   .register({
     //Configuración de los controladores
+    ManagementTopicController: asClass(ManagementTopicController).singleton(),
+    ManagementTutorController: asClass(ManagementTutorController).singleton(),
     EnrollmentController: asClass(EnrollmentController).singleton(),
     UserController: asClass(UserController).singleton(),
     RolController: asClass(RolController).singleton(),
@@ -111,10 +125,14 @@ container
     DevelopmentTypeController: asClass(DevelopmentTypeController).singleton(),
     GroupController: asClass(GroupController).singleton(),
     InductionPeriodController: asClass(InductionPeriodController).singleton(),
-    WorkshopRegistrationController: asClass(WorkshopRegistrationController).singleton(),
+    WorkshopRegistrationController: asClass(
+      WorkshopRegistrationController
+    ).singleton(),
   })
   .register({
     //Configuración de rutas
+    ManagementTopicRoutes: asFunction(ManagementTopicRoutes).singleton(),
+    ManagementTutorRoutes: asFunction(ManagementTutorRoutes).singleton(),
     EnrollmentRoutes: asFunction(EnrollmentRoutes).singleton(),
     UserRoutes: asFunction(UserRoutes).singleton(),
     RolRoutes: asFunction(RolRoutes).singleton(),
@@ -125,10 +143,14 @@ container
     DevelopmentTypeRoutes: asFunction(DevelopmentTypeRoutes).singleton(),
     GroupRoutes: asFunction(GroupRoutes).singleton(),
     InductionPeriodRoutes: asFunction(InductionPeriodRoutes).singleton(),
-    WorkshopRegistrationRoutes: asFunction(WorkshopRegistrationRoutes).singleton(),
+    WorkshopRegistrationRoutes: asFunction(
+      WorkshopRegistrationRoutes
+    ).singleton(),
   })
   .register({
     //Configuración de modelos
+    ManagementTopic: asValue(ManagementTopic),
+    ManagementTutor: asValue(ManagementTutor),
     Enrollment: asValue(Enrollment),
     User: asValue(User),
     Rol: asValue(Rol),

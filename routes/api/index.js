@@ -1,4 +1,6 @@
 module.exports = {
+    ManagementTopicRoutes: require("./v1.managementTopic"),
+    ManagementTutorRoutes: require("./v1.managementTutor"),
     SubPermissionRoutes: require("./v1.subPermission"),
     EnrollmentRoutes: require("./v1.enrollment"),
     UserRoutes: require("./v1.user"),
