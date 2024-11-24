@@ -1,3 +1,5 @@
+// enrollment.model.js
+
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
@@ -15,8 +17,11 @@ const enrollmentSchema = new Schema(
     partner: { type: Schema.Types.ObjectId, ref: 'User' },
     preferredTutors: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     group: { type: Schema.Types.ObjectId, ref: 'Group' }, // Referencia al grupo
+    isGroupCreated: { type: Boolean, default: false }, // Nuevo campo para indicar si el grupo ha sido creado
   },
   { timestamps: true, versionKey: false }
 );
+
+// No hay middleware aquí
 
 module.exports = mongoose.model('Enrollment', enrollmentSchema);
