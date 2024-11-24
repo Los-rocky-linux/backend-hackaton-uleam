@@ -42,17 +42,28 @@ module.exports = class EnrollmentService extends BaseService {
     } = enrollmentData;
 
     // Obtener el mecanismo de desarrollo
-    const devMechanism = await this.developmentTypeModel.findById(developmentMechanism);
+    const devMechanism = await this.developmentTypeModel.findById(
+      developmentMechanism
+    );
     if (!devMechanism) {
-      throw new AppError('El mecanismo de desarrollo especificado no existe.', 400);
+      throw new AppError(
+        'El mecanismo de desarrollo especificado no existe.',
+        400
+      );
     }
 
     if (devMechanism.name === 'Individual' && partner) {
-      throw new AppError('No se puede asignar un compañero si el desarrollo es individual.', 400);
+      throw new AppError(
+        'No se puede asignar un compañero si el desarrollo es individual.',
+        400
+      );
     }
 
     if (devMechanism.name === 'Grupal' && !partner) {
-      throw new AppError('Debe asignar un compañero si el desarrollo es grupal.', 400);
+      throw new AppError(
+        'Debe asignar un compañero si el desarrollo es grupal.',
+        400
+      );
     }
 
     // Crear la inscripción
@@ -113,20 +124,18 @@ module.exports = class EnrollmentService extends BaseService {
         message = 'Grupo creado con su compañero seleccionado.';
       } else {
         // Si no hay inscripción del compañero, queda pendiente
-        message = 'Inscripción creada. Esperando a que su compañero también lo seleccione.';
+        message =
+          'Inscripción creada. Esperando a que su compañero también lo seleccione.';
       }
     }
 
     return { enrollment, message };
   });
 
-  // Método delete actualizado
   delete = catchServiceAsync(async (id) => {
     if (!id) {
       throw new AppError('Id must be sent', 400);
     }
-
-    console.log(`[EnrollmentService] Attempting to delete enrollment with id: ${id}`);
 
     // Buscar la inscripción
     const enrollment = await this.enrollmentModel.findById(id).exec();
@@ -156,41 +165,56 @@ module.exports = class EnrollmentService extends BaseService {
         );
 
         if (group.enrollments.length === 0) {
-          console.log(`[EnrollmentService] Group with id ${group._id} has no enrollments. Removing group.`);
-          await group.deleteOne();
+          console.log(
+            `[EnrollmentService] Group with id ${group._id} has no enrollments. Removing group.`
+          );
+          await this.groupModel.findByIdAndDelete(group._id);
           console.log(`[EnrollmentService] Group ${group._id} removed.`);
         } else if (group.enrollments.length === 1 && !group.isIndividual) {
           const remainingEnrollmentId = group.enrollments[0];
-          const remainingEnrollment = await this.enrollmentModel.findById(remainingEnrollmentId).exec();
+          const remainingEnrollment = await this.enrollmentModel
+            .findById(remainingEnrollmentId)
+            .exec();
 
           if (remainingEnrollment) {
-            console.log(`[EnrollmentService] Updating remaining enrollment ${remainingEnrollment._id} to pending.`);
+            console.log(
+              `[EnrollmentService] Updating remaining enrollment ${remainingEnrollment._id} to pending.`
+            );
             // Actualizar la inscripción restante para que no tenga un grupo y 'isGroupCreated' a false
             remainingEnrollment.group = null;
             remainingEnrollment.isGroupCreated = false;
             await remainingEnrollment.save();
-            console.log(`[EnrollmentService] Remaining enrollment ${remainingEnrollment._id} updated to pending.`);
+            console.log(
+              `[EnrollmentService] Remaining enrollment ${remainingEnrollment._id} updated to pending.`
+            );
           } else {
-            console.error(`[EnrollmentService] Remaining enrollment with id ${remainingEnrollmentId} not found.`);
+            console.error(
+              `[EnrollmentService] Remaining enrollment with id ${remainingEnrollmentId} not found.`
+            );
           }
 
           // Eliminar el grupo antiguo
-          console.log(`[EnrollmentService] Removing old group with id: ${group._id}`);
-          await group.deleteOne();
+          console.log(
+            `[EnrollmentService] Removing old group with id: ${group._id}`
+          );
+          await this.groupModel.findByIdAndDelete(group._id);
           console.log(`[EnrollmentService] Old group ${group._id} removed.`);
         } else {
           // Guardar el grupo actualizado
           await group.save();
-          console.log(`[EnrollmentService] Group ${group._id} saved with updated enrollments and members.`);
+          console.log(
+            `[EnrollmentService] Group ${group._id} saved with updated enrollments and members.`
+          );
         }
       } else {
-        console.warn(`[EnrollmentService] Group with id ${enrollment.group} not found.`);
+        console.warn(
+          `[EnrollmentService] Group with id ${enrollment.group} not found.`
+        );
       }
     }
 
     // Eliminar la inscripción
-    await enrollment.deleteOne();
-    console.log(`[EnrollmentService] Enrollment with id ${id} deleted successfully.`);
+    await this.enrollmentModel.findByIdAndDelete(id);
 
     return { message: 'Inscripción eliminada correctamente' };
   });
