@@ -1,4 +1,6 @@
 module.exports = {
+  ManagementTutor: require("./managementTutor.model"),
+  ManagementTopic: require("./managementTopic.model"),
   SubPermission: require("./subPermission.model"),
   Enrollment: require("./enrollment.model"),
   User: require("./user.model"),
@@ -8,5 +10,7 @@ module.exports = {
   Modality: require("./modality.model"),
   DevelopmentType: require("./developmentType.model"),
   Group: require("./group.model"),
+  InductionPeriod: require("./inductionPeriod.model"),
+  WorkshopRegistration: require("./workshopRegistration.model"),
 
 };

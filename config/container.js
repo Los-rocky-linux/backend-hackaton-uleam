@@ -8,7 +8,9 @@ const config = require(".");
 const Routes = require("../routes");
 
 //Services
-const { 
+const {
+  ManagementTopicService,
+  ManagementTutorService,
   EnrollmentService,
   UserService,
   RolService,
@@ -17,10 +19,14 @@ const {
   SubPermissionService,
   ModalityService,
   DevelopmentTypeService,
-  GroupService
+  GroupService,
+  InductionPeriodService,
+  WorkshopRegistrationService,
 } = require("../services");
 //Controllers
-const { 
+const {
+  ManagementTopicController,
+  ManagementTutorController,
   EnrollmentController,
   UserController,
   RolController,
@@ -29,15 +35,19 @@ const {
   SubPermissionController,
   ModalityController,
   DevelopmentTypeController,
-  GroupController
- } = require("../controllers");
+  GroupController,
+  InductionPeriodController,
+  WorkshopRegistrationController,
+} = require("../controllers");
 
 //Startup
 const { Database, Server } = require("../startup");
 
 //Routes
 
-const { 
+const {
+  ManagementTopicRoutes,
+  ManagementTutorRoutes,
   EnrollmentRoutes,
   UserRoutes,
   RolRoutes,
@@ -46,21 +56,27 @@ const {
   SubPermissionRoutes,
   ModalityRoutes,
   DevelopmentTypeRoutes,
-  GroupRoutes
- } = require("../routes/api/index");
+  GroupRoutes,
+  InductionPeriodRoutes,
+  WorkshopRegistrationRoutes,
+} = require("../routes/api/index");
 
 //Models
 const {
-   Enrollment,
-   User,
-   Rol,
-   RolePermission,
-   Permission,
-   SubPermission,
-   Modality,
-   DevelopmentType,
-   Group
-  } = require("../models");
+  ManagementTopic,
+  ManagementTutor,
+  Enrollment,
+  User,
+  Rol,
+  RolePermission,
+  Permission,
+  SubPermission,
+  Modality,
+  DevelopmentType,
+  Group,
+  InductionPeriod,
+  WorkshopRegistration,
+} = require("../models");
 
 //Funtions
 const {} = require("../functions");
@@ -79,6 +95,8 @@ container
   })
   .register({
     //Configuración de los servicios
+    ManagementTopicService: asClass(ManagementTopicService).singleton(),
+    ManagementTutorService: asClass(ManagementTutorService).singleton(),
     EnrollmentService: asClass(EnrollmentService).singleton(),
     UserService: asClass(UserService).singleton(),
     RolService: asClass(RolService).singleton(),
@@ -88,9 +106,15 @@ container
     ModalityService: asClass(ModalityService).singleton(),
     DevelopmentTypeService: asClass(DevelopmentTypeService).singleton(),
     GroupService: asClass(GroupService).singleton(),
+    InductionPeriodService: asClass(InductionPeriodService).singleton(),
+    WorkshopRegistrationService: asClass(
+      WorkshopRegistrationService
+    ).singleton(),
   })
   .register({
     //Configuración de los controladores
+    ManagementTopicController: asClass(ManagementTopicController).singleton(),
+    ManagementTutorController: asClass(ManagementTutorController).singleton(),
     EnrollmentController: asClass(EnrollmentController).singleton(),
     UserController: asClass(UserController).singleton(),
     RolController: asClass(RolController).singleton(),
@@ -100,9 +124,15 @@ container
     ModalityController: asClass(ModalityController).singleton(),
     DevelopmentTypeController: asClass(DevelopmentTypeController).singleton(),
     GroupController: asClass(GroupController).singleton(),
+    InductionPeriodController: asClass(InductionPeriodController).singleton(),
+    WorkshopRegistrationController: asClass(
+      WorkshopRegistrationController
+    ).singleton(),
   })
   .register({
     //Configuración de rutas
+    ManagementTopicRoutes: asFunction(ManagementTopicRoutes).singleton(),
+    ManagementTutorRoutes: asFunction(ManagementTutorRoutes).singleton(),
     EnrollmentRoutes: asFunction(EnrollmentRoutes).singleton(),
     UserRoutes: asFunction(UserRoutes).singleton(),
     RolRoutes: asFunction(RolRoutes).singleton(),
@@ -112,9 +142,15 @@ container
     ModalityRoutes: asFunction(ModalityRoutes).singleton(),
     DevelopmentTypeRoutes: asFunction(DevelopmentTypeRoutes).singleton(),
     GroupRoutes: asFunction(GroupRoutes).singleton(),
+    InductionPeriodRoutes: asFunction(InductionPeriodRoutes).singleton(),
+    WorkshopRegistrationRoutes: asFunction(
+      WorkshopRegistrationRoutes
+    ).singleton(),
   })
   .register({
     //Configuración de modelos
+    ManagementTopic: asValue(ManagementTopic),
+    ManagementTutor: asValue(ManagementTutor),
     Enrollment: asValue(Enrollment),
     User: asValue(User),
     Rol: asValue(Rol),
@@ -124,6 +160,8 @@ container
     Modality: asValue(Modality),
     DevelopmentType: asValue(DevelopmentType),
     Group: asValue(Group),
+    InductionPeriod: asValue(InductionPeriod),
+    WorkshopRegistration: asValue(WorkshopRegistration),
   })
   .register({
     //middlewares
