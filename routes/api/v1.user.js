@@ -12,9 +12,5 @@ module.exports = function ({ UserController }) {
   router.put('/update/:id', UserController.update);
   router.delete('/delete/:id', UserController.delete);
   
-  router.post("/login", (req, res, next) =>
-    UserController.login(req, res, next)
-  );
-
   return router;
 };
