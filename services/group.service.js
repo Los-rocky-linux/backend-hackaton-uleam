@@ -12,27 +12,30 @@ module.exports = class GroupService extends BaseService {
 
   getAllGroups = catchServiceAsync(async (limit = 10, pageNum = 1, filters = {}) => {
     const pagination = limit * (pageNum - 1);
-
+  
     // Construir el objeto de filtros para Mongoose
-    const queryFilters = {};
-
+    const queryFilters = { members: { $exists: true, $not: {$size: 0} } }; // Asegurarse de que los grupos tienen miembros
+  
     if (filters.startDate && filters.endDate) {
       queryFilters.createdAt = {
         $gte: new Date(filters.startDate),
         $lte: new Date(filters.endDate),
       };
     }
-
+  
     if (filters.members) {
       const membersArray = filters.members.split(',');
-      queryFilters.members = { $in: membersArray };
+      queryFilters.members = { $in: membersArray, $exists: true, $not: {$size: 0} };
     }
-
-    // Obtener grupos existentes con filtros
+  
+    // Filtro para excluir grupos sin inscripciones
+    queryFilters.enrollments = { $exists: true, $not: {$size: 0} };
+  
     const groups = await this.model
       .find(queryFilters)
       .populate({
         path: 'enrollments',
+        match: { group: { $ne: null } },
         populate: [
           { path: 'createdBy', select: 'name lastName email' },
           { path: 'modality', select: 'name' },
@@ -47,102 +50,7 @@ module.exports = class GroupService extends BaseService {
       .skip(pagination)
       .limit(limit)
       .sort({ createdAt: -1 });
-
-    // Ahora, también obtendremos las inscripciones individuales
-    // que no están asociadas a ningún grupo
-    const individualEnrollmentsQueryFilters = {};
-
-    if (filters.startDate && filters.endDate) {
-      individualEnrollmentsQueryFilters.createdAt = {
-        $gte: new Date(filters.startDate),
-        $lte: new Date(filters.endDate),
-      };
-    }
-
-    if (filters.members) {
-      const membersArray = filters.members.split(',');
-      individualEnrollmentsQueryFilters.createdBy = { $in: membersArray };
-    }
-
-    // Aplicar filtros adicionales para las inscripciones individuales
-    if (filters.modality) {
-      individualEnrollmentsQueryFilters.modality = filters.modality;
-    }
-
-    if (filters.developmentMechanism) {
-      individualEnrollmentsQueryFilters.developmentMechanism = filters.developmentMechanism;
-    }
-
-    if (filters.topicTitle) {
-      individualEnrollmentsQueryFilters.topicTitle = {
-        $regex: filters.topicTitle,
-        $options: 'i'
-      };
-    }
-
-    if (filters.preferredTutors) {
-      const tutorsArray = filters.preferredTutors.split(',');
-      individualEnrollmentsQueryFilters.preferredTutors = { $in: tutorsArray };
-    }
-
-    // Obtener inscripciones individuales sin grupo
-    const individualEnrollments = await this.enrollmentModel
-      .find({
-        ...individualEnrollmentsQueryFilters,
-        group: null // Asegurarse de que no estén asociadas a ningún grupo
-      })
-      .populate('createdBy', 'name lastName email')
-      .populate('modality', 'name')
-      .populate('developmentMechanism', 'name')
-      .populate('preferredTutors', 'name')
-      .populate('partner', 'name lastName email')
-      .lean();
-
-    // Formatear las inscripciones individuales para que coincidan con la estructura de los grupos
-    const formattedIndividuals = individualEnrollments.map(enrollment => ({
-      _id: enrollment._id,
-      enrollments: [enrollment],
-      members: [enrollment.createdBy],
-      createdAt: enrollment.createdAt,
-    }));
-
-    // Combinar los grupos y las inscripciones individuales
-    const combinedResults = [...groups, ...formattedIndividuals];
-
-    // Aplicar filtros adicionales si es necesario
-    const filteredCombinedResults = combinedResults.filter(group => {
-      let matches = true;
-
-      if (filters.modality) {
-        matches = matches && group.enrollments.some(enrollment => enrollment.modality?._id.toString() === filters.modality);
-      }
-
-      if (filters.developmentMechanism) {
-        matches = matches && group.enrollments.some(enrollment => enrollment.developmentMechanism?._id.toString() === filters.developmentMechanism);
-      }
-
-      if (filters.topicTitle) {
-        matches = matches && group.enrollments.some(enrollment => 
-          enrollment.topicTitle?.toLowerCase().includes(filters.topicTitle.toLowerCase())
-        );
-      }
-
-      if (filters.preferredTutors) {
-        const tutorsArray = filters.preferredTutors.split(',');
-        matches = matches && group.enrollments.some(enrollment => 
-          enrollment.preferredTutors?.some(tutor => tutorsArray.includes(tutor._id.toString()))
-        );
-      }
-
-      return matches;
-    });
-
-    // Calcular el total de documentos después de filtrar
-    const totalCount = filteredCombinedResults.length;
-
-    // Aplicar paginación
-    const paginatedResults = filteredCombinedResults.slice(pagination, pagination + limit);
-
-    return { result: paginatedResults, totalCount };
+  
+    return { result: groups, totalCount: groups.length };
   });
-};
+};  
