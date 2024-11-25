@@ -6,8 +6,12 @@ module.exports = function ({ ManagementTopicController }) {
   router.post("/create", ManagementTopicController.create);
   router.get("/get-all", ManagementTopicController.getAll);
   router.get("/get/:id", ManagementTopicController.getOne);
+  router.get(
+    "/get-by-enrollment/:enrollmentId",
+    ManagementTopicController.getByEnrollment
+  );
   router.put("/update/:id", ManagementTopicController.update);
   router.delete("/delete/:id", ManagementTopicController.delete);
 
   return router;
-}
+};
