@@ -3,9 +3,11 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 module.exports = class UserService extends BaseService {
-  constructor({ User, Rol }) {
+  constructor({ User, Rol, Permission, RolePermission }) {
     super(User);
     this.rolModel = Rol;
+    this.permissionModel = Permission;
+    this.rolePermissionModel = RolePermission;
   }
 
   // async authenticate(email, password) {
@@ -35,8 +37,8 @@ module.exports = class UserService extends BaseService {
   // }
 
   async authenticate(email, password) {
-    // Buscar al usuario por email
-    const user = await this.model.findOne({ email, status: true });
+    // Buscar al usuario por email y popular el rol
+    const user = await this.model.findOne({ email, status: true }).populate('rol');
 
     if (!user) {
       throw new Error("Email o contraseña inválidos");
@@ -49,15 +51,24 @@ module.exports = class UserService extends BaseService {
       throw new Error("Email o contraseña inválidos");
     }
 
+    // Obtener los permisos del rol del usuario
+    const rolePermissions = await this.rolePermissionModel
+      .find({ rol: user.rol._id })
+      .populate('permission');
+
+    // Extraer los nombres de los permisos
+    const permissions = rolePermissions.map(rp => rp.permission.permissionName);
+
     // Generar el token JWT
     const token = jwt.sign(
       {
         id: user._id,
         email: user.email,
-        rol: user.rol,
+        rol: user.rol.roleName,
+        permissions: permissions,
       },
-      process.env.JWT_SECRET || "default_secret_key", // Clave secreta
-      { expiresIn: "1h" } // El token expira en 1 hora
+      process.env.JWT_SECRET || "default_secret_key",
+      { expiresIn: "1h" }
     );
 
     return {
@@ -67,12 +78,12 @@ module.exports = class UserService extends BaseService {
         name: user.name,
         lastName: user.lastName,
         email: user.email,
-        rol: user.rol,
+        rol: user.rol, // Incluimos el objeto rol completo
+        permissions: permissions, // Incluimos los permisos
         status: user.status,
       },
     };
   }
-  
   async getTutors(limit = 10, pageNum = 1) {
     const pagination = limit * (pageNum - 1);
     const tutorRole = await this.rolModel.findOne({ roleName: "Tutor" });
