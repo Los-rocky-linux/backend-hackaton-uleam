@@ -10,35 +10,11 @@ module.exports = class UserService extends BaseService {
     this.rolePermissionModel = RolePermission;
   }
 
-  // async authenticate(email, password) {
-  //   // Buscar al usuario por email
-  //   const user = await this.model.findOne({ email, status: true });
-
-  //   if (!user) {
-  //     throw new Error("Email o contraseña inválidos");
-  //   }
-
-  //   // Verificar la contraseña
-  //   const isPasswordValid = await bcrypt.compare(password, user.password);
-
-  //   if (!isPasswordValid) {
-  //     throw new Error("Email o contraseña inválidos");
-  //   }
-
-  //   // Retornar los datos básicos del usuario si la autenticación es exitosa
-  //   return {
-  //     id: user._id,
-  //     name: user.name,
-  //     lastName: user.lastName,
-  //     email: user.email,
-  //     rol: user.rol,
-  //     status: user.status,
-  //   };
-  // }
-
   async authenticate(email, password) {
     // Buscar al usuario por email y popular el rol
-    const user = await this.model.findOne({ email, status: true }).populate('rol');
+    const user = await this.model
+      .findOne({ email, status: true })
+      .populate("rol");
 
     if (!user) {
       throw new Error("Email o contraseña inválidos");
@@ -54,10 +30,12 @@ module.exports = class UserService extends BaseService {
     // Obtener los permisos del rol del usuario
     const rolePermissions = await this.rolePermissionModel
       .find({ rol: user.rol._id })
-      .populate('permission');
+      .populate("permission");
 
     // Extraer los nombres de los permisos
-    const permissions = rolePermissions.map(rp => rp.permission.permissionName);
+    const permissions = rolePermissions.map(
+      (rp) => rp.permission.permissionName
+    );
 
     // Generar el token JWT
     const token = jwt.sign(
@@ -84,6 +62,7 @@ module.exports = class UserService extends BaseService {
       },
     };
   }
+
   async getTutors(limit = 10, pageNum = 1) {
     const pagination = limit * (pageNum - 1);
     const tutorRole = await this.rolModel.findOne({ roleName: "Tutor" });
@@ -120,6 +99,27 @@ module.exports = class UserService extends BaseService {
     });
     const result = await this.model
       .find({ rol: studentRole._id, status: true })
+      .lean()
+      .skip(pagination)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+
+    return { result, totalCount };
+  }
+
+  async getCourt(limit = 10, pageNum = 1) {
+    const pagination = limit * (pageNum - 1);
+    const courtRole = await this.rolModel.findOne({ roleName: "Tribunal" });
+
+    if (!courtRole) {
+      throw new Error("Court role not found");
+    }
+    const totalCount = await this.model.countDocuments({
+      rol: courtRole._id,
+      status: true,
+    });
+    const result = await this.model
+      .find({ rol: courtRole._id, status: true })
       .lean()
       .skip(pagination)
       .limit(limit)
