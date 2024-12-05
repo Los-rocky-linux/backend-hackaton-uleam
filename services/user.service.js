@@ -38,7 +38,9 @@ module.exports = class UserService extends BaseService {
 
   async authenticate(email, password) {
     // Buscar al usuario por email y popular el rol
-    const user = await this.model.findOne({ email, status: true }).populate('rol');
+    const user = await this.model
+      .findOne({ email, status: true })
+      .populate("rol");
 
     if (!user) {
       throw new Error("Email o contraseña inválidos");
@@ -54,10 +56,12 @@ module.exports = class UserService extends BaseService {
     // Obtener los permisos del rol del usuario
     const rolePermissions = await this.rolePermissionModel
       .find({ rol: user.rol._id })
-      .populate('permission');
+      .populate("permission");
 
     // Extraer los nombres de los permisos
-    const permissions = rolePermissions.map(rp => rp.permission.permissionName);
+    const permissions = rolePermissions.map(
+      (rp) => rp.permission.permissionName
+    );
 
     // Generar el token JWT
     const token = jwt.sign(
@@ -84,7 +88,6 @@ module.exports = class UserService extends BaseService {
       },
     };
   }
-  
   async getTutors(limit = 10, pageNum = 1) {
     const pagination = limit * (pageNum - 1);
     const tutorRole = await this.rolModel.findOne({ roleName: "Tutor" });
@@ -128,7 +131,6 @@ module.exports = class UserService extends BaseService {
 
     return { result, totalCount };
   }
-
   async getCourt(limit = 10, pageNum = 1) {
     const pagination = limit * (pageNum - 1);
     const courtRole = await this.rolModel.findOne({ roleName: "Tribunal" });
