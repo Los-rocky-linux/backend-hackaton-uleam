@@ -9,6 +9,8 @@ const Routes = require("../routes");
 
 //Services
 const {
+  ScheduleService,
+  ManagementCourtService,
   ManagementTopicService,
   ManagementTutorService,
   EnrollmentService,
@@ -25,6 +27,8 @@ const {
 } = require("../services");
 //Controllers
 const {
+  ScheduleController,
+  ManagementCourtController,
   ManagementTopicController,
   ManagementTutorController,
   EnrollmentController,
@@ -46,6 +50,8 @@ const { Database, Server } = require("../startup");
 //Routes
 
 const {
+  ScheduleRoutes,
+  ManagementCourtRoutes,
   ManagementTopicRoutes,
   ManagementTutorRoutes,
   EnrollmentRoutes,
@@ -63,6 +69,8 @@ const {
 
 //Models
 const {
+  Schedule,
+  ManagementCourt,
   ManagementTopic,
   ManagementTutor,
   Enrollment,
@@ -95,6 +103,8 @@ container
   })
   .register({
     //Configuración de los servicios
+    ScheduleService: asClass(ScheduleService).singleton(),
+    ManagementCourtService: asClass(ManagementCourtService).singleton(),
     ManagementTopicService: asClass(ManagementTopicService).singleton(),
     ManagementTutorService: asClass(ManagementTutorService).singleton(),
     EnrollmentService: asClass(EnrollmentService).singleton(),
@@ -113,6 +123,8 @@ container
   })
   .register({
     //Configuración de los controladores
+    ScheduleController: asClass(ScheduleController).singleton(),
+    ManagementCourtController: asClass(ManagementCourtController).singleton(),
     ManagementTopicController: asClass(ManagementTopicController).singleton(),
     ManagementTutorController: asClass(ManagementTutorController).singleton(),
     EnrollmentController: asClass(EnrollmentController).singleton(),
@@ -131,6 +143,8 @@ container
   })
   .register({
     //Configuración de rutas
+    ScheduleRoutes: asFunction(ScheduleRoutes).singleton(),
+    ManagementCourtRoutes: asFunction(ManagementCourtRoutes).singleton(),
     ManagementTopicRoutes: asFunction(ManagementTopicRoutes).singleton(),
     ManagementTutorRoutes: asFunction(ManagementTutorRoutes).singleton(),
     EnrollmentRoutes: asFunction(EnrollmentRoutes).singleton(),
@@ -149,6 +163,8 @@ container
   })
   .register({
     //Configuración de modelos
+    Schedule: asValue(Schedule),
+    ManagementCourt: asValue(ManagementCourt),
     ManagementTopic: asValue(ManagementTopic),
     ManagementTutor: asValue(ManagementTutor),
     Enrollment: asValue(Enrollment),

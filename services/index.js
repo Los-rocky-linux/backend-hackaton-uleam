@@ -1,4 +1,6 @@
 module.exports = {
+    ScheduleService: require("./schedule.service"),
+    ManagementCourtService: require("./managementCourt.service"),
     ManagementTopicService: require("./managementTopic.service"),
     ManagementTutorService: require("./managementTutor.service"),
     SubPermissionService: require("./subPermission.service"),

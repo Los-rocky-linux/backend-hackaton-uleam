@@ -8,7 +8,7 @@ module.exports = class EnrollmentController extends BaseController {
   }
 
   create = catchControllerAsync(async (req, res) => {
-    const userId = req.user ? req.user._id : req.body.userId; // Obtener userId desde req.user o del body directamente
+    const userId = req.user ? req.user._id : req.body.userId;
     if (!userId) {
       return appResponse(res, {
         statusCode: 400,
@@ -19,11 +19,24 @@ module.exports = class EnrollmentController extends BaseController {
 
     const enrollmentData = { ...req.body, userId };
     const result = await this.service.createEnrollment(enrollmentData);
+
     return appResponse(res, {
       statusCode: 201,
       status: "success",
-      message: "Enrollment created successfully",
-      data: result,
+      message: result.message,
+      data: result.enrollment,
+    });
+  });
+
+  // Asegurarse de que el método delete llama al método sobrescrito en el servicio
+  delete = catchControllerAsync(async (req, res) => {
+    const { id } = req.params;
+    const result = await this.service.delete(id);
+
+    return appResponse(res, {
+      statusCode: 200,
+      status: 'success',
+      message: result.message,
     });
   });
 };
