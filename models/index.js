@@ -1,4 +1,5 @@
 module.exports = {
+  Schedule: require("./schedule.model"),
   ManagementCourt: require("./managementCourt.model"),
   ManagementTutor: require("./managementTutor.model"),
   ManagementTopic: require("./managementTopic.model"),

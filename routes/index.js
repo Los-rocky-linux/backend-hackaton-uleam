@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const { ErrorMiddleware, NotFoundMiddleware } = require("../middleware");
 
 module.exports = function ({
+  ScheduleRoutes,
   ManagementCourtRoutes,
   ManagementTopicRoutes,
   ManagementTutorRoutes,
@@ -27,6 +28,7 @@ module.exports = function ({
     .use(cors())
     .use(morgan("dev"))
     .use(express.urlencoded({ extended: true }));
+  apiRouter.use("/schedule", ScheduleRoutes);
   apiRouter.use("/management-court", ManagementCourtRoutes);
   apiRouter.use("/management-topic", ManagementTopicRoutes);
   apiRouter.use("/management-tutor", ManagementTutorRoutes);

@@ -1,4 +1,5 @@
 module.exports = {
+    ScheduleRoutes: require("./v1.schedule"),
     ManagementCourtRoutes: require("./v1.managementCourt"),
     ManagementTopicRoutes: require("./v1.managementTopic"),
     ManagementTutorRoutes: require("./v1.managementTutor"),
