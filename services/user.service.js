@@ -10,32 +10,6 @@ module.exports = class UserService extends BaseService {
     this.rolePermissionModel = RolePermission;
   }
 
-  // async authenticate(email, password) {
-  //   // Buscar al usuario por email
-  //   const user = await this.model.findOne({ email, status: true });
-
-  //   if (!user) {
-  //     throw new Error("Email o contraseña inválidos");
-  //   }
-
-  //   // Verificar la contraseña
-  //   const isPasswordValid = await bcrypt.compare(password, user.password);
-
-  //   if (!isPasswordValid) {
-  //     throw new Error("Email o contraseña inválidos");
-  //   }
-
-  //   // Retornar los datos básicos del usuario si la autenticación es exitosa
-  //   return {
-  //     id: user._id,
-  //     name: user.name,
-  //     lastName: user.lastName,
-  //     email: user.email,
-  //     rol: user.rol,
-  //     status: user.status,
-  //   };
-  // }
-
   async authenticate(email, password) {
     // Buscar al usuario por email y popular el rol
     const user = await this.model
@@ -88,6 +62,7 @@ module.exports = class UserService extends BaseService {
       },
     };
   }
+
   async getTutors(limit = 10, pageNum = 1) {
     const pagination = limit * (pageNum - 1);
     const tutorRole = await this.rolModel.findOne({ roleName: "Tutor" });
@@ -131,6 +106,7 @@ module.exports = class UserService extends BaseService {
 
     return { result, totalCount };
   }
+
   async getCourt(limit = 10, pageNum = 1) {
     const pagination = limit * (pageNum - 1);
     const courtRole = await this.rolModel.findOne({ roleName: "Tribunal" });

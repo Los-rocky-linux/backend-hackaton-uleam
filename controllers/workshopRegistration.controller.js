@@ -11,18 +11,18 @@ module.exports = class WorkshopRegistrationController extends BaseController {
   create = catchControllerAsync(async (req, res) => {
     const { userId, inductionPeriod, carrera, nivelAprobado } = req.body;
 
-    if (
-      !userId ||
-      !inductionPeriod ||
-      !carrera ||
-      nivelAprobado === undefined
-    ) {
-      return appResponse(res, {
-        statusCode: 400,
-        status: 'fail',
-        message: 'Todos los campos son requeridos.',
-      });
-    }
+    // if (
+    //   !userId ||
+    //   !inductionPeriod ||
+    //   !carrera ||
+    //   nivelAprobado === undefined
+    // ) {
+    //   return appResponse(res, {
+    //     statusCode: 400,
+    //     status: 'fail',
+    //     message: 'Todos los campos son requeridos.',
+    //   });
+    // }
 
     if (nivelAprobado < 5) {
       return appResponse(res, {

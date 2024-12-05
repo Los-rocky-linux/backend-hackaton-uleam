@@ -1,5 +1,4 @@
 module.exports = {
-  ManagementCourt: require("./managementCourt.model"),
   ManagementTutor: require("./managementTutor.model"),
   ManagementTopic: require("./managementTopic.model"),
   SubPermission: require("./subPermission.model"),
