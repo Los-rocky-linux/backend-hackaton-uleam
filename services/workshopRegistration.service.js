@@ -15,7 +15,7 @@ module.exports = class WorkshopRegistrationService extends BaseService {
 
     const result = await this.model
       .find()
-      .populate('user', 'name lastName email carrera nivelAprobado') // Traer datos del usuario
+      .populate('user', 'name lastName email') // Traer datos del usuario
       .populate('inductionPeriod', 'name description') // Traer datos del período de inducción
       .lean()
       .skip(pagination)
@@ -24,4 +24,5 @@ module.exports = class WorkshopRegistrationService extends BaseService {
 
     return { result, totalCount };
   });
+  
 };
