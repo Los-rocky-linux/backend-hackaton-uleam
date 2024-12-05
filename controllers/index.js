@@ -1,4 +1,5 @@
 module.exports = {
+    ManagementCourtController: require("./managementCourt.controller"),
     ManagementTopicController: require("./managementTopic.controller"),
     ManagementTutorController: require("./managementTutor.controller"),
     SubPermissionController: require("./subPermission.controller"),
