@@ -5,6 +5,8 @@ module.exports = function ({ UserController }) {
   router.get('/get-all', UserController.getAll);
   //api para llamar solo tutores
   router.get("/get-all-tutor", UserController.getTutors);
+  //api para llamar al tribunal academico
+  router.get("/get-all-court", UserController.getCourt);
   //api para llamar estudiantes
   router.get("/get-all-students", UserController.getStudents);
   router.get('/get/:id', UserController.getOne);

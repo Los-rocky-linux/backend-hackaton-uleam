@@ -4,7 +4,8 @@ const morgan = require("morgan");
 
 const { ErrorMiddleware, NotFoundMiddleware } = require("../middleware");
 
-module.exports = function ({ 
+module.exports = function ({
+  ManagementCourtRoutes,
   ManagementTopicRoutes,
   ManagementTutorRoutes,
   SubPermissionRoutes,
@@ -18,7 +19,6 @@ module.exports = function ({
   GroupRoutes,
   InductionPeriodRoutes,
   WorkshopRegistrationRoutes,
-
 }) {
   const router = express.Router();
   const apiRouter = express.Router();
@@ -27,6 +27,7 @@ module.exports = function ({
     .use(cors())
     .use(morgan("dev"))
     .use(express.urlencoded({ extended: true }));
+  apiRouter.use("/management-court", ManagementCourtRoutes);
   apiRouter.use("/management-topic", ManagementTopicRoutes);
   apiRouter.use("/management-tutor", ManagementTutorRoutes);
   apiRouter.use("/sub-permission", SubPermissionRoutes);
@@ -40,7 +41,6 @@ module.exports = function ({
   apiRouter.use("/group", GroupRoutes);
   apiRouter.use("/induction-period", InductionPeriodRoutes);
   apiRouter.use("/workshop-registration", WorkshopRegistrationRoutes);
-
 
   router.use("/v1/api", apiRouter);
   router.use("/", (req, res) => {
