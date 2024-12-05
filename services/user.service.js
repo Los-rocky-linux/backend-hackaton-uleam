@@ -84,7 +84,6 @@ module.exports = class UserService extends BaseService {
       },
     };
   }
-  
   async getTutors(limit = 10, pageNum = 1) {
     const pagination = limit * (pageNum - 1);
     const tutorRole = await this.rolModel.findOne({ roleName: "Tutor" });
@@ -121,27 +120,6 @@ module.exports = class UserService extends BaseService {
     });
     const result = await this.model
       .find({ rol: studentRole._id, status: true })
-      .lean()
-      .skip(pagination)
-      .limit(limit)
-      .sort({ createdAt: -1 });
-
-    return { result, totalCount };
-  }
-
-  async getCourt(limit = 10, pageNum = 1) {
-    const pagination = limit * (pageNum - 1);
-    const courtRole = await this.rolModel.findOne({ roleName: "Tribunal" });
-
-    if (!courtRole) {
-      throw new Error("Court role not found");
-    }
-    const totalCount = await this.model.countDocuments({
-      rol: courtRole._id,
-      status: true,
-    });
-    const result = await this.model
-      .find({ rol: courtRole._id, status: true })
       .lean()
       .skip(pagination)
       .limit(limit)

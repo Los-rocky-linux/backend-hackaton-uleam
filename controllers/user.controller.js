@@ -1,4 +1,4 @@
-const BaseController = require("./base.controller");
+const BaseController = require('./base.controller');
 
 module.exports = class UserController extends BaseController {
   constructor({ UserService }) {
@@ -61,7 +61,7 @@ module.exports = class UserController extends BaseController {
       });
     }
   }
-
+  
   getTutors = async (req, res, next) => {
     try {
       const { page, limit } = req.query;
@@ -92,24 +92,6 @@ module.exports = class UserController extends BaseController {
         status: "success",
         message: "Students fetched successfully",
         data: students,
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  getCourt = async (req, res, next) => {
-    try {
-      const { page, limit } = req.query;
-      const court = await this.service.getCourt(
-        parseInt(limit) || 10,
-        parseInt(page) || 1
-      );
-      res.status(200).json({
-        statusCode: 200,
-        status: "success",
-        message: "Court fetched successfully",
-        data: court,
       });
     } catch (error) {
       next(error);

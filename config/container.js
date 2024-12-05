@@ -9,7 +9,6 @@ const Routes = require("../routes");
 
 //Services
 const {
-  ManagementCourtService,
   ManagementTopicService,
   ManagementTutorService,
   EnrollmentService,
@@ -26,7 +25,6 @@ const {
 } = require("../services");
 //Controllers
 const {
-  ManagementCourtController,
   ManagementTopicController,
   ManagementTutorController,
   EnrollmentController,
@@ -48,7 +46,6 @@ const { Database, Server } = require("../startup");
 //Routes
 
 const {
-  ManagementCourtRoutes,
   ManagementTopicRoutes,
   ManagementTutorRoutes,
   EnrollmentRoutes,
@@ -66,7 +63,6 @@ const {
 
 //Models
 const {
-  ManagementCourt,
   ManagementTopic,
   ManagementTutor,
   Enrollment,
@@ -99,7 +95,6 @@ container
   })
   .register({
     //Configuración de los servicios
-    ManagementCourtService: asClass(ManagementCourtService).singleton(),
     ManagementTopicService: asClass(ManagementTopicService).singleton(),
     ManagementTutorService: asClass(ManagementTutorService).singleton(),
     EnrollmentService: asClass(EnrollmentService).singleton(),
@@ -118,7 +113,6 @@ container
   })
   .register({
     //Configuración de los controladores
-    ManagementCourtController: asClass(ManagementCourtController).singleton(),
     ManagementTopicController: asClass(ManagementTopicController).singleton(),
     ManagementTutorController: asClass(ManagementTutorController).singleton(),
     EnrollmentController: asClass(EnrollmentController).singleton(),
@@ -137,7 +131,6 @@ container
   })
   .register({
     //Configuración de rutas
-    ManagementCourtRoutes: asFunction(ManagementCourtRoutes).singleton(),
     ManagementTopicRoutes: asFunction(ManagementTopicRoutes).singleton(),
     ManagementTutorRoutes: asFunction(ManagementTutorRoutes).singleton(),
     EnrollmentRoutes: asFunction(EnrollmentRoutes).singleton(),
@@ -156,7 +149,6 @@ container
   })
   .register({
     //Configuración de modelos
-    ManagementCourt: asValue(ManagementCourt),
     ManagementTopic: asValue(ManagementTopic),
     ManagementTutor: asValue(ManagementTutor),
     Enrollment: asValue(Enrollment),
