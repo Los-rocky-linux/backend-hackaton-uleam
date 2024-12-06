@@ -20,6 +20,8 @@ module.exports = function ({
   GroupRoutes,
   InductionPeriodRoutes,
   WorkshopRegistrationRoutes,
+  SustentationRoutes,
+  SustentationDocumentRoutes,
 }) {
   const router = express.Router();
   const apiRouter = express.Router();
@@ -43,6 +45,8 @@ module.exports = function ({
   apiRouter.use("/group", GroupRoutes);
   apiRouter.use("/induction-period", InductionPeriodRoutes);
   apiRouter.use("/workshop-registration", WorkshopRegistrationRoutes);
+  apiRouter.use("/sustentation", SustentationRoutes);
+  apiRouter.use("/sustentation-documents", SustentationDocumentRoutes);
 
   router.use("/v1/api", apiRouter);
   router.use("/", (req, res) => {

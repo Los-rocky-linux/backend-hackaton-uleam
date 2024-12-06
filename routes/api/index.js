@@ -14,4 +14,6 @@ module.exports = {
     GroupRoutes: require("./v1.group"),
     InductionPeriodRoutes: require("./v1.inductionPeriod"),
     WorkshopRegistrationRoutes: require("./v1.workshopRegistration"),
+    SustentationRoutes: require("./v1.sustentation"),
+    SustentationDocumentRoutes: require("./v1.sustentationDocuments")
 };

@@ -14,5 +14,6 @@ module.exports = {
   Group: require("./group.model"),
   InductionPeriod: require("./inductionPeriod.model"),
   WorkshopRegistration: require("./workshopRegistration.model"),
-
+  Sustentation: require("./sustentation.model"),
+  SustentationDocument: require("./sustentationDocument.model"),
 };

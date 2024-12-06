@@ -14,5 +14,7 @@ module.exports = {
     GroupService: require("./group.service"),
     InductionPeriodService: require("./inductionPeriod.service"),
     WorkshopRegistrationService: require("./workshopRegistration.service"),
+    SustentationService: require("./sustentation.service"),
+    SustentationDocumentService: require("./sustentationDocument.service")
 
 };

@@ -1,13 +1,12 @@
-//Configurar nuestro contenedor de injección de depencia
 const { createContainer, asClass, asValue, asFunction } = require("awilix");
 
-//Config
+// Config
 const config = require(".");
 
-//Routes
+// Routes
 const Routes = require("../routes");
 
-//Services
+// Services
 const {
   ScheduleService,
   ManagementCourtService,
@@ -24,8 +23,11 @@ const {
   GroupService,
   InductionPeriodService,
   WorkshopRegistrationService,
+  SustentationService,
+  SustentationDocumentService,
 } = require("../services");
-//Controllers
+
+// Controllers
 const {
   ScheduleController,
   ManagementCourtController,
@@ -42,13 +44,14 @@ const {
   GroupController,
   InductionPeriodController,
   WorkshopRegistrationController,
+  SustentationController,
+  SustentationDocumentController,
 } = require("../controllers");
 
-//Startup
+// Startup
 const { Database, Server } = require("../startup");
 
-//Routes
-
+// Routes
 const {
   ScheduleRoutes,
   ManagementCourtRoutes,
@@ -65,9 +68,11 @@ const {
   GroupRoutes,
   InductionPeriodRoutes,
   WorkshopRegistrationRoutes,
+  SustentationRoutes,
+  SustentationDocumentRoutes
 } = require("../routes/api/index");
 
-//Models
+// Models
 const {
   Schedule,
   ManagementCourt,
@@ -84,25 +89,24 @@ const {
   Group,
   InductionPeriod,
   WorkshopRegistration,
+  Sustentation,
+  SustentationDocument
 } = require("../models");
 
-//Funtions
-const {} = require("../functions");
-
+// Middleware
 const { protect } = require("../middleware/authMiddleware");
-// const AuthUtils = require("../utils/auth");
+
 const container = createContainer();
+
 container
   .register({
-    //Configuración principal
     router: asFunction(Routes).singleton(),
     config: asValue(config),
-    // AuthUtils: asClass(AuthUtils).singleton(),
     Database: asClass(Database).singleton(),
     Server: asClass(Server).singleton(),
   })
   .register({
-    //Configuración de los servicios
+    // Servicios
     ScheduleService: asClass(ScheduleService).singleton(),
     ManagementCourtService: asClass(ManagementCourtService).singleton(),
     ManagementTopicService: asClass(ManagementTopicService).singleton(),
@@ -117,12 +121,13 @@ container
     DevelopmentTypeService: asClass(DevelopmentTypeService).singleton(),
     GroupService: asClass(GroupService).singleton(),
     InductionPeriodService: asClass(InductionPeriodService).singleton(),
-    WorkshopRegistrationService: asClass(
-      WorkshopRegistrationService
-    ).singleton(),
+    WorkshopRegistrationService: asClass(WorkshopRegistrationService).singleton(),
+    SustentationService: asClass(SustentationService).singleton(),
+    SustentationDocumentService: asClass(SustentationDocumentService).singleton(),
+
   })
   .register({
-    //Configuración de los controladores
+    // Controladores
     ScheduleController: asClass(ScheduleController).singleton(),
     ManagementCourtController: asClass(ManagementCourtController).singleton(),
     ManagementTopicController: asClass(ManagementTopicController).singleton(),
@@ -137,12 +142,13 @@ container
     DevelopmentTypeController: asClass(DevelopmentTypeController).singleton(),
     GroupController: asClass(GroupController).singleton(),
     InductionPeriodController: asClass(InductionPeriodController).singleton(),
-    WorkshopRegistrationController: asClass(
-      WorkshopRegistrationController
-    ).singleton(),
+    WorkshopRegistrationController: asClass(WorkshopRegistrationController).singleton(),
+    SustentationController: asClass(SustentationController).singleton(),
+    SustentationDocumentController: asClass(SustentationDocumentController).singleton(),
+
   })
   .register({
-    //Configuración de rutas
+    // Rutas
     ScheduleRoutes: asFunction(ScheduleRoutes).singleton(),
     ManagementCourtRoutes: asFunction(ManagementCourtRoutes).singleton(),
     ManagementTopicRoutes: asFunction(ManagementTopicRoutes).singleton(),
@@ -157,12 +163,13 @@ container
     DevelopmentTypeRoutes: asFunction(DevelopmentTypeRoutes).singleton(),
     GroupRoutes: asFunction(GroupRoutes).singleton(),
     InductionPeriodRoutes: asFunction(InductionPeriodRoutes).singleton(),
-    WorkshopRegistrationRoutes: asFunction(
-      WorkshopRegistrationRoutes
-    ).singleton(),
+    WorkshopRegistrationRoutes: asFunction(WorkshopRegistrationRoutes).singleton(),
+    SustentationRoutes: asFunction(SustentationRoutes).singleton(),
+    SustentationDocumentRoutes: asFunction(SustentationDocumentRoutes).singleton(),
+
   })
   .register({
-    //Configuración de modelos
+    // Modelos
     Schedule: asValue(Schedule),
     ManagementCourt: asValue(ManagementCourt),
     ManagementTopic: asValue(ManagementTopic),
@@ -178,13 +185,12 @@ container
     Group: asValue(Group),
     InductionPeriod: asValue(InductionPeriod),
     WorkshopRegistration: asValue(WorkshopRegistration),
+    Sustentation: asValue(Sustentation),
+    SustentationDocument: asValue(SustentationDocument),
   })
   .register({
-    //middlewares
+    // Middlewares
     AuthMiddleware: asFunction(protect).singleton(),
-  })
-  .register({
-    //Configuración de funciones
   });
 
 module.exports = container;
